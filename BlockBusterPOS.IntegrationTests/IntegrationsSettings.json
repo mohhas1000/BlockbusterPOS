@@ -1,0 +1,69 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "OpenApi": {
+    "Title": "BlockBuster API",
+    "Version": "1.0.0",
+    "Description": "This is a temporary Video Rental API"
+  },
+  "CustomerTransaction": {
+    "TestData": {
+      "10001": {
+        "Customer": {
+          "Id": 10001,
+          "Name": "Benji",
+          "PhoneNumber": "55521-1775",
+          "IsClubMember": false
+        },
+        "Rentals": [
+          {
+            "Type": "DVD",
+            "Count": 2,
+            "RentalDate": "2024-09-13T14:30"
+          },
+          {
+            "Type": "BluRay",
+            "Count": 1,
+            "RentalDate": "2024-09-07T14:30"
+          }
+        ],
+        "TotalRentalPrice": null
+      },
+      "10002": {
+        "Customer": {
+          "Id": 10002,
+          "Name": "Summrs",
+          "PhoneNumber": "12123-456",
+          "IsClubMember": true
+        },
+        "Rentals": [
+          {
+            "Type": "DVD",
+            "Count": 2,
+            "RentalDate": "2024-09-05T14:30"
+          },
+          {
+            "Type": "BluRay",
+            "Count": 3,
+            "RentalDate": "2024-05-07T18:30"
+          }
+        ],
+        "TotalRentalPrice": null
+      }
+    }
+  },
+  "RentalPrice": {
+    "DVD": {
+      "BasePrice": 29,
+      "Discount": 10
+    },
+    "BluRay": {
+      "BasePrice": 39,
+      "Discount": 15
+    }
+  }
+}
