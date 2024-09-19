@@ -1,5 +1,19 @@
 # BlockbusterPOS
-This repository contains a .NET Core API built as part of a coding assignment for a temporary cash register system for a video rental store. The goal of the application is to manage rentals of DVDs and Blu-ray discs, calculate total rental costs based on customer type (club member or non-member), and handle different pricing rules depending on the number of items rented. The solution is designed following a Controller-Service-Repository pattern to ensure clear separation of concerns, maintainability, and scalability.
+This repository contains a .NET Core API built as part of a coding assignment for a temporary cash register system for a video rental store. The goal of the application is to manage rentals of DVDs and Blu-ray discs, calculate total rental costs based on customer type (club member or non-member), and handle different pricing rules depending on the number of items rented.
+
+Architecturally, I chose to use the Controller-Service-Repository pattern due to its clear separation of concerns, maintainability, and scalability. This approach has facilitated integration testing with mocking, which I have also implemented. This has provided a controlled environment to observe how different parts of the application interact with each other. This method has improved testability and allowed me to verify the requirements and the system's behavior under various scenarios.
+
+Here are some reasons why I opted for this method instead of a console application or MVC application:
+
+**Flexibility and Scalability:** ASP.NET Core API offers greater flexibility and scalability, making it easier to build a solution that is easy to extend.
+
+**Separation of Concerns:** Clear division between frontend and backend, which facilitates focus on logic and data processing.
+
+**Easy Integration:** API-based solutions are better suited for integration with third-party services and external systems if needed.
+
+**Testing and Mocking:** The API architecture facilitates testing and mocking, allowing for effective isolation and testing of specific parts of the application.
+
+**Easier Maintenance:** Clear interfaces and separate layers in an API-based architecture make it easier to maintain, develop, and add new functionality.
 
 ## Assignment Overview
 Objective
@@ -30,8 +44,9 @@ The program outputs the total price directly to the screen.
 
 ## Features
 * **Rental Management:** Support for handling rentals of DVDs and Blu-rays, with pricing rules tailored to customer membership status.
-* **Cost Calculation:** Automatically calculates total rental prices, including discounts and special pricing for club members.
-* **Controller-Service-Repository Pattern:** Ensures separation of concerns, making the system more maintainable and scalable.
+* **Cost Calculation:** Automatically calculates total rental prices, including discounts and special pricing for club members. Extension methods are used for calculations to keep the code organized and reusable.
+* **Controller-Service-Repository Pattern:** Ensures separation of concerns, making the system more maintainable and scalable. The Controller handles HTTP requests, the Service layer contains business logic, and the Repository manages data access.
+* **Configuration Management:** Uses IOptions<T> to read configuration values from appsettings.json, allowing for flexible and centralized configuration management.
 * **Customer Interaction:** Optionally allows input of customer data and rental details to calculate the price dynamically.
 * **Ambition Levels:** Supports both basic and advanced levels of functionality based on user input.
 * **Testing & Reliability:** The project includes integration tests to validate system functionality and ensure reliability.
