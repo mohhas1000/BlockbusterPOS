@@ -1,0 +1,319 @@
+{
+  "x-generator": "NSwag v14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "BlockBuster API",
+    "description": "This is a temporary Video Rental API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5143"
+    }
+  ],
+  "paths": {
+    "/customerTransactions": {
+      "get": {
+        "tags": [
+          "CustomerTransactions"
+        ],
+        "summary": "List all customer transactions",
+        "description": "Gets a list of all customer transactions. If no transactions are found, an empty list will be returned with status code 200.",
+        "operationId": "ListCustomerTransaction",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomerTransactionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CustomerTransactions"
+        ],
+        "summary": "Create a new customer transaction",
+        "description": "Creates a new customer transaction. The request body must include the customer name, address, phone number, club membership status (true/false) and transaction items (DVDs and Blu-Rays). If the custom ID already exists, it will update the customer's transactions.",
+        "operationId": "CreateCustomerTransaction",
+        "requestBody": {
+          "x-name": "input",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerTransactionDto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customerTransactions/{customerId}": {
+      "get": {
+        "tags": [
+          "CustomerTransactions"
+        ],
+        "summary": "Get a customer transaction",
+        "description": "Gets the details of a customer transaction based on the customer ID.",
+        "operationId": "GetCustomerTransaction",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerTransactionDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CustomerTransactionDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "customer": {
+            "$ref": "#/components/schemas/CustomerModelDto"
+          },
+          "rentals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RentalModelDto"
+            }
+          },
+          "totalRentalPrice": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "CustomerModelDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "isClubMember": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RentalModelDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/RentalType"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rentalDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "RentalType": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "DVD",
+          "BluRay"
+        ],
+        "enum": [
+          "DVD",
+          "BluRay"
+        ]
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "additionalProperties": {
+          "nullable": true
+        },
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "extensions": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        }
+      },
+      "CreationResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "customerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateCustomerTransactionDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "customer": {
+            "example": {
+              "id": 0,
+              "name": "string",
+              "phoneNumber": "string",
+              "isClubMember": false
+            },
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CustomerModel"
+              }
+            ]
+          },
+          "rentals": {
+            "type": "array",
+            "example": [
+              {
+                "type": "DVD",
+                "count": 2
+              },
+              {
+                "type": "BluRay",
+                "count": 1
+              }
+            ],
+            "items": {
+              "$ref": "#/components/schemas/RentalModelDtoBasic"
+            }
+          }
+        }
+      },
+      "CustomerModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "phoneNumber",
+          "isClubMember"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "phoneNumber": {
+            "type": "string",
+            "minLength": 1
+          },
+          "isClubMember": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RentalModelDtoBasic": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/RentalType"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    }
+  }
+}
